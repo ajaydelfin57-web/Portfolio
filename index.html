@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajay Delfin | Portfolio</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <style>
+        :root {
+            --bg-color: #0d0d16;
+            --text-color: #ffffff;
+            --accent-color: #00ffd5;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --nav-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; }
+
+        /* --- LAYOUT --- */
+        .left-panel {
+            width: 40vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+            z-index: 10;
+        }
+
+        .right-panel {
+            width: 60vw;
+            height: 100vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            padding-top: 100px;
+            position: relative;
+        }
+
+        @media(max-width: 900px) {
+            body { display: block; height: auto; overflow: auto; }
+            .left-panel { width: 100vw; height: auto; padding: 60px 20px; }
+            .right-panel { width: 100vw; height: auto; overflow-y: visible; padding-top: 20px; }
+        }
+
+        /* NAVIGATION & HOVER EFFECTS */
+        nav {
+            position: fixed;
+            top: 25px;
+            right: 40px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(15px);
+            padding: 12px 25px;
+            border-radius: 40px;
+            z-index: 1000;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        nav ul { display: flex; gap: 20px; list-style: none; }
+        
+        nav a { 
+            color: var(--text-color); 
+            text-decoration: none; 
+            font-size: 13px; 
+            font-weight: 500; 
+            transition: all 0.3s ease;
+            display: inline-block;
+            opacity: 0.8;
+        }
+
+        nav a:hover { 
+            color: var(--accent-color); 
+            opacity: 1;
+            transform: translateY(-2px);
+            text-shadow: 0 0 10px var(--accent-color);
+        }
+
+        /* LEFT PANEL COMPONENTS */
+        .avatar img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 4px solid var(--accent-color);
+            margin-bottom: 20px;
+            object-fit: cover;
+            box-shadow: 0 0 25px var(--accent-color);
+        }
+
+        .left-panel h1 { font-size: 2.8rem; margin-bottom: 5px; }
+        .left-panel h2 { font-size: 1.2rem; margin-bottom: 30px; height: 1.5em; opacity: 0.9; }
+        .left-panel h2 span { color: var(--accent-color); }
+
+        .terminal {
+            background: #000;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 400px;
+            font-family: 'Courier New', monospace;
+            text-align: left;
+            color: #00ff00;
+            border: 1px solid #333;
+            font-size: 0.85rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .social-icons { display: flex; gap: 25px; margin-top: 20px; font-size: 1.8rem; }
+        .social-icons a { color: var(--text-color); transition: 0.3s; text-decoration: none; }
+        .social-icons a:hover { color: var(--accent-color); transform: scale(1.2); }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--accent-color);
+            color: #000;
+            border-radius: 35px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            font-size: 1rem;
+            box-shadow: 0 0 15px rgba(0, 255, 213, 0.3);
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 20px var(--accent-color); }
+
+        /* RIGHT PANEL COMPONENTS */
+        section { max-width: 100%; margin: auto; padding: 60px 50px; }
+        .section-title { font-size: 28px; margin-bottom: 35px; border-left: 5px solid var(--accent-color); padding-left: 20px; }
+
+        .square-grid {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.4s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover { border-color: var(--accent-color); transform: translateY(-8px); background: rgba(255, 255, 255, 0.12); }
+
+        .card-date { font-size: 0.75rem; color: var(--accent-color); font-weight: 600; margin-bottom: 8px; text-transform: uppercase; }
+        .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 5px; line-height: 1.3; }
+        .card-subtitle { font-size: 0.9rem; opacity: 0.7; font-style: italic; margin-bottom: 12px; }
+        .card-list { font-size: 0.85rem; line-height: 1.5; list-style: none; opacity: 0.9; }
+        .card-list li { margin-bottom: 6px; position: relative; padding-left: 20px; }
+        .card-list li::before { content: "▹"; color: var(--accent-color); position: absolute; left: 0; font-weight: bold; }
+
+        /* GALLERY UPDATES */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            overflow: hidden;
+            transition: max-height 0.6s ease-in-out;
+        }
+        .gallery-grid.collapsed { max-height: 230px; }
+        
+        .gallery-item {
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.6s ease;
+            filter: grayscale(30%);
+        }
+        .gallery-item:hover img { transform: scale(1.15); filter: grayscale(0%); }
+
+        .see-more-btn {
+            background: transparent;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+            display: block;
+            margin: 30px auto 0;
+        }
+        .see-more-btn:hover { background: var(--accent-color); color: #000; }
+
+        /* LIGHTBOX */
+        #lightbox {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            cursor: zoom-out;
+        }
+        #lightbox img { max-width: 90%; max-height: 85%; border-radius: 10px; box-shadow: 0 0 40px var(--accent-color); }
+
+        /* BACK TO TOP */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-color);
+            color: #000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1001;
+            transition: 0.3s;
+            opacity: 0;
+            visibility: hidden;
+            box-shadow: 0 0 20px var(--accent-color);
+        }
+
+        #backToTop.show { opacity: 1; visibility: visible; }
+    </style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<aside class="left-panel">
+    <div class="avatar">
+        <img src="profile.jpg" alt="Ajay Delfin" onerror="this.src='https://ui-avatars.com/api/?name=Ajay+Delfin&background=00ffd5&color=000'">
+    </div>
+    <h1>Ajay Delfin</h1>
+    <h2>I am a <span id="typing"></span></h2>
+
+    <div class="terminal">
+        <p>> initializing_portfolio.sh ...</p>
+        <p>> location: Luang Prabang, Laos</p>
+        <p>> status: system_online</p>
+    </div>
+
+    <a class="btn" href="Ajay_Delfin_CV.pdf" download style="margin-bottom: 20px;">Download CV</a>
+
+    <div class="social-icons">
+        <a href="https://m.me/ajay.delfin.58" target="_blank" title="Messenger"><i class="fab fa-facebook-messenger"></i></a>
+        <a href="https://wa.me/8562096572047" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.linkedin.com/in/ajay-delfin-634a4a1a5" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:ajaydelfin57@gmail.com" target="_blank" title="Gmail"><i class="far fa-envelope"></i></a>
+    </div>
+</aside>
+
+<main class="right-panel" id="scrollContainer">
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#hobbies">Hobbies</a></li>
+            <li><a href="#skills">Tech</a></li>
+        </ul>
+    </nav>
+
+    <section id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="card">
+            <p>Experienced in academic leadership and NGO operations, with a background in managing programs, coordinating partnerships, and organizing events. Skilled in administration, documentation, communication, and working with diverse teams.</p>
+        </div>
+    </section>
+
+    <section id="education">
+        <h2 class="section-title">Education</h2>
+        <div class="square-grid">
+            <div class="card">
+                <div class="card-date">June 2022</div>
+                <div class="card-title">Bachelor of Science in Information Technology</div>
+                <div class="card-subtitle">Carlos Hilado Memorial State University</div>
+                <ul class="card-list">
+                    <li>Cum Laude Graduate</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-date">March 2018</div>
+                <div class="card-title">Humanities and Social Sciences</div>
+                <div class="card-subtitle">Senior High School - Bago City College</div>
+                <ul class="card-list">
+                    <li>With Honor</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2 class="section-title">Professional Experience</h2>
+        <div class="square-grid">
+            <div class="card">
+                <div class="card-date">Dec 2025 - Present</div>
+                <div class="card-title">Front Office Receptionist / IT Officer / Night Auditor</div>
+                <div class="card-subtitle">Sivilay School - Luang Prabang, Lao PDR</div>
+                <ul class="card-list">
+                    <li>Teach primary students ICT and English subject.</li>
+                    <li>Publication materials layout artist.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-date">Jan 2023 - Present</div>
+                <div class="card-title">Operations Manager</div>
+                <div class="card-subtitle">Educators Of Negros Island Inc. (EONII)</div>
+                <ul class="card-list">
+                    <li>Responsible for overseeing daily operations and efficiency.</li>
+                    <li>Manage finance administration and logistics.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <h2 class="section-title">Gallery</h2>
+        <div class="gallery-grid collapsed" id="galleryGrid">
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="images/4.jpg" alt="Ride" onerror="this.src='https://via.placeholder.com/400/0d0d16/00ffd5?text=Activity+1'"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="images/8.jpg" alt="Nature" onerror="this.src='https://via.placeholder.com/400/0d0d16/00ffd5?text=Activity+2'"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="images/3.jpg" alt="Work" onerror="this.src='https://via.placeholder.com/400/0d0d16/00ffd5?text=Activity+3'"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="images/1.jpg" alt="Event" onerror="this.src='https://via.placeholder.com/400/0d0d16/00ffd5?text=Activity+4'"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="images/5.jpg" alt="Ride" onerror="this.src='https://via.placeholder.com/400/0d0d16/00ffd5?text=Activity+1'"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="images/6.jpg" alt="Nature" onerror="this.src='https://via.placeholder.com/400/0d0d16/00ffd5?text=Activity+2'"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="images/7.jpg" alt="Work" onerror="this.src='https://via.placeholder.com/400/0d0d16/00ffd5?text=Activity+3'"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="images/2.jpg" alt="Event" onerror="this.src='https://via.placeholder.com/400/0d0d16/00ffd5?text=Activity+4'"></div>
+        </div>
+        <button class="see-more-btn" id="seeMoreBtn" onclick="toggleGallery()">See More</button>
+    </section>
+
+    <section id="hobbies">
+        <h2 class="section-title">Interests & Hobbies</h2>
+        <div class="square-grid" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));">
+            <div class="card" style="text-align: center; padding: 20px;">
+                <i class="fas fa-mountain" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 12px;"></i>
+                <div style="font-size: 0.85rem; font-weight: 600;">Mountaineering</div>
+            </div>
+            <div class="card" style="text-align: center; padding: 20px;">
+                <i class="fas fa-motorcycle" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 12px;"></i>
+                <div style="font-size: 0.85rem; font-weight: 600;">Motorcycle Riding</div>
+            </div>
+            <div class="card" style="text-align: center; padding: 20px;">
+                <i class="fas fa-table-tennis-paddle-ball" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 12px;"></i>
+                <div style="font-size: 0.85rem; font-weight: 600;">Badminton</div>
+            </div>
+            <div class="card" style="text-align: center; padding: 20px;">
+                <i class="fas fa-book-open" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 12px;"></i>
+                <div style="font-size: 0.85rem; font-weight: 600;">Reading</div>
+            </div>
+            <div class="card" style="text-align: center; padding: 20px;">
+                <i class="fas fa-gamepad" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 12px;"></i>
+                <div style="font-size: 0.85rem; font-weight: 600;">Mobile Games</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title">Tech Stack</h2>
+        <div class="card" style="flex-direction: row; gap: 25px; flex-wrap: wrap; justify-content: center; padding: 35px;">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" width="45" alt="PHP">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="45" alt="MySQL">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="45" alt="JS">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" width="45" alt="HTML">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" width="45" alt="CSS">
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 50px 0; opacity: 0.5; font-size: 0.85rem;">
+        <p>© 2026 Ajay Delfin | Crafted with Passion</p>
+    </footer>
+</main>
+
+<div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" src=""></div>
+<div id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></div>
+
+<script>
+    new Typed("#typing",{
+        strings:["IT Professional","Educator","NGO Manager","Developer"],
+        typeSpeed:70,
+        backSpeed:40,
+        loop:true
+    });
+
+    particlesJS("particles-js",{
+        particles:{
+            number:{value:50},
+            size:{value:2},
+            color:{value:"#00ffd5"},
+            line_linked:{enable:true,color:"#00ffd5",opacity:0.15},
+            move:{speed:1.2}
+        }
+    });
+
+    const scrollContainer = document.getElementById('scrollContainer');
+    const btt = document.getElementById('backToTop');
+
+    scrollContainer.onscroll = function() {
+        if (scrollContainer.scrollTop > 400) {
+            btt.classList.add('show');
+        } else {
+            btt.classList.remove('show');
+        }
+    };
+
+    function scrollToTop() {
+        scrollContainer.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function toggleGallery() {
+        const grid = document.getElementById('galleryGrid');
+        const btn = document.getElementById('seeMoreBtn');
+        if (grid.classList.contains('collapsed')) {
+            grid.classList.remove('collapsed');
+            grid.style.maxHeight = "2000px";
+            btn.innerText = "See Less";
+        } else {
+            grid.classList.add('collapsed');
+            grid.style.maxHeight = "230px";
+            btn.innerText = "See More";
+        }
+    }
+
+    function openLightbox(el) {
+        document.getElementById('lightboxImg').src = el.querySelector('img').src;
+        document.getElementById('lightbox').style.display = 'flex';
+    }
+
+    if (window.innerWidth > 900) {
+        ScrollReveal().reveal(".right-panel section", { 
+            container: ".right-panel", distance: "30px", duration: 900, origin: "bottom", interval: 150 
+        });
+    }
+</script>
+
+</body>
+</html>
